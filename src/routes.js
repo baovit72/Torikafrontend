@@ -13,6 +13,8 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 
+import Login from  './app/pages/login';
+
 export default [
   {
     path: "/",
@@ -54,5 +56,10 @@ export default [
     path: "/blog-posts",
     layout: DefaultLayout,
     component: BlogPosts
+  },
+  {
+    path: "/login",
+    layout: Login, 
+    component: null
   }
 ];

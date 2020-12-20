@@ -14,6 +14,7 @@ import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 
 import Login from  './app/pages/login';
+import Signup from './app/pages/signup';
 
 export default [
   {
@@ -61,5 +62,11 @@ export default [
     path: "/login",
     layout: Login, 
     component: null
-  }
+  },
+  {
+    path: "/signup",
+    layout: Signup, 
+    component: null
+  },
+
 ];

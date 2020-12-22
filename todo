@@ -5,3 +5,8 @@
 -- Trang book trip  
 -- Trang admin quan ly
  
+
+ -> Flow login: Lưu jwt vào localStorage 
+                -> Khởi tạo app, check token  , token valid -> vô admin  
+                -> không valid -> vào trang login  
+                

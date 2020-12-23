@@ -36,5 +36,10 @@ export default function() {
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
     }
+    ,{
+      title: "Places",
+      htmlBefore: '<i class="material-icons">place</i>',
+      to: "/place",
+    }
   ];
 }

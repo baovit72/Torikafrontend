@@ -16,6 +16,7 @@ import BlogPosts from "./views/BlogPosts";
 import Login from  './app/pages/login';
 import Signup from './app/pages/signup';
 
+import Place from './app/pages/place';
 export default [
   {
     path: "/",
@@ -68,5 +69,10 @@ export default [
     layout: Signup, 
     component: null
   },
+  {
+    path: "/place",
+    layout: DefaultLayout,
+    component: Place,
+  }
 
 ];

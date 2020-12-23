@@ -8,7 +8,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 import "./assets/css/login.css"
 import "./assets/css/util.css"
+import "./assets/css/custom.css"
 
+
+window.API_DOMAIN =  "https://localhost:5001"
 export default () => (
   <Router basename={process.env.REACT_APP_BASENAME || ""}>
     <div>

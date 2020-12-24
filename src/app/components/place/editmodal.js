@@ -13,23 +13,18 @@ import {
   FormInput,
   FormGroup,
   FormSelect,
-  FormCheckbox,
   Button,
   FormTextarea
 } from "shards-react";
 
-import PopupNotification from "./popupnotification.js";
+import PopupNotification from "../utils/popupnotification.js";
 import APIHelper from "../../utils/apihelper.js";
-import { Dispatcher, Constants } from "../../flux";
+import { Dispatcher, Constants } from "../../../flux";
 
-export default class NewPlaceTable extends Component {
+export default class EditModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      desc: "",
-      notes: "",
-      pPlace: null,
       showResult: false,
       resultContent: {}
     };
@@ -46,7 +41,10 @@ export default class NewPlaceTable extends Component {
         notes: notes,
         parentPlaceId: (belong && belong !== "none" && belong) || null
       };
-      APIHelper.post(window.API_DOMAIN + "/api/places", data)
+      APIHelper.put(
+        window.API_DOMAIN + "/api/places/" + this.props.item.placeId,
+        data
+      )
         .then(resp => {
           if (!resp.errors) {
             this.setState(
@@ -54,7 +52,7 @@ export default class NewPlaceTable extends Component {
                 showResult: true,
                 resultContent: {
                   title: "Success",
-                  content: "You have successfully created a new place !",
+                  content: `You have successfully updated this place !`,
                   closeTop: this.props.cancel
                 }
               },
@@ -94,13 +92,15 @@ export default class NewPlaceTable extends Component {
       });
     }
   }
+
   render() {
+    const { placeName, description, notes, parentPlace } = this.props.item;
     const { cancel, places } = this.props;
     return (
       <div>
         {" "}
         <Modal open={true} centered>
-          <ModalHeader>NEW PLACE</ModalHeader>
+          <ModalHeader> EDIT PLACE </ModalHeader>{" "}
           <ModalBody>
             <ListGroup flush>
               <ListGroupItem className="p-3">
@@ -109,63 +109,70 @@ export default class NewPlaceTable extends Component {
                     <Form>
                       <Row form>
                         <Col md="12" className="form-group">
-                          <label htmlFor="plName">Name</label>
+                          <label htmlFor="plName"> Name </label>{" "}
                           <FormInput
+                            defaultValue={placeName}
                             innerRef={elem => (this.iName = elem)}
                             id="plName"
                             placeholder="Name"
                           />
-                        </Col>
-                      </Row>
+                        </Col>{" "}
+                      </Row>{" "}
                       <FormGroup>
-                        <label htmlFor="plDescription">Description</label>
+                        <label htmlFor="plDescription"> Description </label>{" "}
                         <FormTextarea
+                          defaultValue={description}
                           innerRef={elem => (this.iDesc = elem)}
                           size="lg"
                           id="plDescription"
                           placeholder="Description"
                         />
-                      </FormGroup>
+                      </FormGroup>{" "}
                       <FormGroup>
-                        <label htmlFor="plNotes">Notes</label>
+                        <label htmlFor="plNotes"> Notes </label>{" "}
                         <FormTextarea
+                          defaultValue={notes}
                           innerRef={elem => (this.iNotes = elem)}
                           size="lg"
                           id="plNotes"
                           placeholder="Notes"
                         />
-                      </FormGroup>
+                      </FormGroup>{" "}
                       <Row form>
                         <Col md="12" className="form-group">
-                          <label htmlFor="plBelong">Belong to</label>
+                          <label htmlFor="plBelong"> Belong to </label>{" "}
                           <FormSelect
+                            defaultValue={
+                              (parentPlace && parentPlace.placeId) || "none"
+                            }
                             innerRef={elem => (this.iBelong = elem)}
                             id="plBelong"
                           >
-                            <option value="none">None</option>
+                            <option value="none"> None </option>{" "}
                             {places.map((place, index) => (
                               <option key={index} value={place.placeId}>
-                                {place.placeName}
+                                {" "}
+                                {place.placeName}{" "}
                               </option>
-                            ))}
-                          </FormSelect>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            </ListGroup>
-          </ModalBody>
+                            ))}{" "}
+                          </FormSelect>{" "}
+                        </Col>{" "}
+                      </Row>{" "}
+                    </Form>{" "}
+                  </Col>{" "}
+                </Row>{" "}
+              </ListGroupItem>{" "}
+            </ListGroup>{" "}
+          </ModalBody>{" "}
           <ModalFooter>
             <Button theme="primary" onClick={this.save.bind(this)}>
-              SAVE
-            </Button>
+              SAVE{" "}
+            </Button>{" "}
             <Button theme="white" onClick={cancel}>
-              CANCEL
-            </Button>
-          </ModalFooter>
-        </Modal>
+              CANCEL{" "}
+            </Button>{" "}
+          </ModalFooter>{" "}
+        </Modal>{" "}
         {this.state.showResult && (
           <PopupNotification
             title={this.state.resultContent.title}
@@ -177,7 +184,7 @@ export default class NewPlaceTable extends Component {
               })
             }
           />
-        )}
+        )}{" "}
       </div>
     );
   }

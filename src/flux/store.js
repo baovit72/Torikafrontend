@@ -3,13 +3,14 @@ import { EventEmitter } from "events";
 import Dispatcher from "./dispatcher";
 import Constants from "./constants";
 import getSidebarNavItems from "../data/sidebar-nav-items";
-import APIHelper from "../utils/apihelper";
+import APIHelper from "../app/utils/apihelper";
 
 let _store = {
     menuVisible: false,
     navItems: getSidebarNavItems(),
 
-    places: []
+    places: [],
+    tours: [],
 };
 
 class Store extends EventEmitter {
@@ -30,6 +31,9 @@ class Store extends EventEmitter {
             case Constants.LIST_PLACES:
                 this.getListPlaces();
                 break;
+            case Constants.LIST_TOURS:
+                this.getListTours();
+                break;
             default:
         }
     }
@@ -39,12 +43,23 @@ class Store extends EventEmitter {
         this.emit(Constants.CHANGE);
     }
 
-    getListPlaces() { 
+    getListPlaces() {
         APIHelper.get(window.API_DOMAIN + "/api/places?limit=10000&isActive=true").then(data => {
             _store.places = data.places;
             this.emit(Constants.CHANGE);
         }).catch(err => console.log(err));
 
+    }
+
+    getListTours() {
+        APIHelper.get(window.API_DOMAIN + "/api/tours?limit=10000&isActive=true").then(data => {
+            _store.tours = data.tours;
+            this.emit(Constants.CHANGE);
+        }).catch(err => console.log(err));
+    }
+
+    getTours() {
+        return _store.tours;
     }
 
     getPlaces() {

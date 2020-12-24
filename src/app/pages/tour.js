@@ -1,13 +1,17 @@
 import React, { Component } from "react";
-import Table from "../components/place/table";
+import Table from "../components/tour/table";
 
 import { Store, Dispatcher, Constants } from "../../flux";
-export default class Place extends Component {
+export default class Tour extends Component {
   constructor() {
     super();
     this.state = {
+      tours: [],
       places: []
     };
+    Dispatcher.dispatch({
+      actionType: Constants.LIST_TOURS
+    });
     Dispatcher.dispatch({
       actionType: Constants.LIST_PLACES
     });
@@ -20,13 +24,13 @@ export default class Place extends Component {
   }
 
   onChange() {
-    console.log(Store.getPlaces());
-    this.setState({ places: Store.getPlaces() });
+    console.log(Store.getTours());
+    this.setState({ tours: Store.getTours(), places: Store.getPlaces() });
   }
   render() {
     return (
       <div>
-        <Table places={this.state.places} />
+        <Table items={this.state.tours} places={this.state.places} />{" "}
       </div>
     );
   }

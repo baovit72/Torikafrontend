@@ -10,24 +10,35 @@ import {
   Button
 } from "shards-react";
 
-import PageTitle from "../../components/common/PageTitle";
-import NewModal from "./newplacemodal";
-import EditModal from "./editplacemodal";
-import RemoveModal from "./removeplacemodal";
+import PageTitle from "../../../components/common/PageTitle";
+import NewModal from "./newmodal";
+import EditModal from "./editmodal";
+import RemoveModal from "./removemodal";
 
-export default class PlaceTable extends Component {
+import ViewModal from "./viewmodal";
+
+export default class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
       newModal: false,
       editModal: false,
       removeModal: false,
+      viewModal: false,
       currentItem: null
     };
   }
 
-  openEditModal() {
-    this.setState({ editModal: true });
+  openViewModal(item) {
+    this.setState({ viewModal: true, currentItem: item });
+  }
+
+  closeViewModal() {
+    this.setState({ viewModal: false });
+  }
+
+  openEditModal(item) {
+    this.setState({ editModal: true, currentItem: item });
   }
 
   closeEditModal() {
@@ -86,12 +97,12 @@ export default class PlaceTable extends Component {
                         <th scope="col" className="border-0">
                           Name
                         </th>
-                        <th scope="col" className="border-0">
+                        {/* <th scope="col" className="border-0">
                           Description
                         </th>
                         <th scope="col" className="border-0">
                           Notes
-                        </th>
+                        </th> */}
                         <th scope="col" className="border-0">
                           Belong to
                         </th>
@@ -107,15 +118,26 @@ export default class PlaceTable extends Component {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{place.placeName}</td>
-                            <td>{place.description}</td>
-                            <td>{place.notes}</td>
+                            {/* <td>{place.description}</td>
+                            <td>{place.notes}</td> */}
                             <td>
                               {(place.parentPlace &&
                                 place.parentPlace.placeName) ||
                                 "None"}
                             </td>
                             <td>
-                              <Button theme="secondary" className="mr-1">
+                              <Button
+                                theme="secondary"
+                                className="mr-1"
+                                onClick={() => this.openViewModal(place)}
+                              >
+                                VIEW
+                              </Button>
+                              <Button
+                                theme="warning"
+                                className="mr-1"
+                                onClick={() => this.openEditModal(place)}
+                              >
                                 EDIT
                               </Button>
                               <Button
@@ -142,12 +164,23 @@ export default class PlaceTable extends Component {
           />
         ) : null}
         {this.state.editModal ? (
-          <EditModal item={this.state.currentItem} />
+          <EditModal
+            item={this.state.currentItem}
+            places={this.props.places}
+            cancel={this.closeEditModal.bind(this)}
+          />
         ) : null}
         {this.state.removeModal ? (
           <RemoveModal
             item={this.state.currentItem}
             cancel={this.closeRemoveModal.bind(this)}
+          />
+        ) : null}
+        {this.state.viewModal ? (
+          <ViewModal
+            places={this.props.places}
+            item={this.state.currentItem}
+            cancel={this.closeViewModal.bind(this)}
           />
         ) : null}
       </div>

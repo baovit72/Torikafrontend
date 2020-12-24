@@ -40,6 +40,11 @@ export default function() {
       title: "Places",
       htmlBefore: '<i class="material-icons">place</i>',
       to: "/place",
+    },
+    {
+      title: "Tours",
+      htmlBefore: '<i class="material-icons">tour</i>',
+      to: "/tour",
     }
   ];
 }

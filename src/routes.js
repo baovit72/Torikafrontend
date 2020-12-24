@@ -17,6 +17,8 @@ import Login from  './app/pages/login';
 import Signup from './app/pages/signup';
 
 import Place from './app/pages/place';
+import Tour from './app/pages/tour';
+
 export default [
   {
     path: "/",
@@ -73,6 +75,12 @@ export default [
     path: "/place",
     layout: DefaultLayout,
     component: Place,
+  },
+  {
+    path: "/tour",
+    layout: DefaultLayout,
+    component: Tour,
   }
+
 
 ];

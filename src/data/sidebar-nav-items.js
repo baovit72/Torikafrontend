@@ -45,6 +45,11 @@ export default function() {
       title: "Tours",
       htmlBefore: '<i class="material-icons">tour</i>',
       to: "/tour",
+    },
+    {
+      title: "Trips",
+      htmlBefore: '<i class="material-icons">trip_origin</i>',
+      to: "/trip",
     }
   ];
 }

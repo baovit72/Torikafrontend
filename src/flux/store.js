@@ -11,6 +11,7 @@ let _store = {
 
     places: [],
     tours: [],
+    trips: [],
 };
 
 class Store extends EventEmitter {
@@ -34,6 +35,9 @@ class Store extends EventEmitter {
             case Constants.LIST_TOURS:
                 this.getListTours();
                 break;
+            case Constants.LIST_TRIPS:
+                this.getListTrips();
+                break;
             default:
         }
     }
@@ -42,6 +46,15 @@ class Store extends EventEmitter {
         _store.menuVisible = !_store.menuVisible;
         this.emit(Constants.CHANGE);
     }
+
+
+    getListTrips() {
+        APIHelper.get(window.API_DOMAIN + "/api/trips?limit=10000&isActive=true").then(data => {
+            _store.trips = data.trips;
+            this.emit(Constants.CHANGE);
+        }).catch(err => console.log(err));
+    }
+
 
     getListPlaces() {
         APIHelper.get(window.API_DOMAIN + "/api/places?limit=10000&isActive=true").then(data => {
@@ -56,6 +69,10 @@ class Store extends EventEmitter {
             _store.tours = data.tours;
             this.emit(Constants.CHANGE);
         }).catch(err => console.log(err));
+    }
+
+    getTrips() {
+        return _store.trips;
     }
 
     getTours() {

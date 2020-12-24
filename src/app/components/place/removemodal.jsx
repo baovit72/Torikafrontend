@@ -12,7 +12,7 @@ import APIHelper from "../../utils/apihelper.js";
 
 import { Dispatcher, Constants } from "../../../flux";
 
-import PopupNotification from "../utils/popupnotification.js";
+import PopupNotification from "../utils/popupnotification";
 
 export default class RemoveModal extends Component {
   constructor(props) {

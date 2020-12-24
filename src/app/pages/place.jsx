@@ -26,7 +26,7 @@ export default class Place extends Component {
   render() {
     return (
       <div>
-        <Table places={this.state.places} />
+        <Table places={this.state.places} />{" "}
       </div>
     );
   }

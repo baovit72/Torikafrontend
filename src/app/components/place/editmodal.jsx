@@ -13,22 +13,84 @@ import {
   FormInput,
   FormGroup,
   FormSelect,
-  FormCheckbox,
   Button,
   FormTextarea
 } from "shards-react";
 
-import PopupNotification from "../utils/popupnotification.js";
+import PopupNotification from "../utils/popupnotification";
 import APIHelper from "../../utils/apihelper.js";
 import { Dispatcher, Constants } from "../../../flux";
 
-export default class ViewModal extends Component {
+export default class EditModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showResult: false,
       resultContent: {}
     };
+  }
+  save() {
+    const name = this.iName.value;
+    const desc = this.iDesc.value;
+    const notes = this.iNotes.value;
+    const belong = this.iBelong.value;
+    if (name && name.length >= 0) {
+      const data = {
+        placeName: name,
+        description: desc,
+        notes: notes,
+        parentPlaceId: (belong && belong !== "none" && belong) || null
+      };
+      APIHelper.put(
+        window.API_DOMAIN + "/api/places/" + this.props.item.placeId,
+        data
+      )
+        .then(resp => {
+          if (!resp.errors) {
+            this.setState(
+              {
+                showResult: true,
+                resultContent: {
+                  title: "Success",
+                  content: `You have successfully updated this place !`,
+                  closeTop: this.props.cancel
+                }
+              },
+              () => {
+                Dispatcher.dispatch({
+                  actionType: Constants.LIST_PLACES
+                });
+              }
+            );
+          } else {
+            this.setState({
+              showResult: true,
+              resultContent: {
+                title: "Failure",
+                content: "An error has occurred, please try again !"
+              }
+            });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          this.setState({
+            showResult: true,
+            resultContent: {
+              title: "Failed",
+              content: "Please check your network and try again !"
+            }
+          });
+        });
+    } else {
+      this.setState({
+        showResult: true,
+        resultContent: {
+          title: "Failed",
+          content: "Please check your input and try again !"
+        }
+      });
+    }
   }
 
   render() {
@@ -38,7 +100,7 @@ export default class ViewModal extends Component {
       <div>
         {" "}
         <Modal open={true} centered>
-          <ModalHeader> VIEW PLACE </ModalHeader>{" "}
+          <ModalHeader> EDIT PLACE </ModalHeader>{" "}
           <ModalBody>
             <ListGroup flush>
               <ListGroupItem className="p-3">
@@ -49,7 +111,6 @@ export default class ViewModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="plName"> Name </label>{" "}
                           <FormInput
-                            disabled
                             defaultValue={placeName}
                             innerRef={elem => (this.iName = elem)}
                             id="plName"
@@ -60,7 +121,6 @@ export default class ViewModal extends Component {
                       <FormGroup>
                         <label htmlFor="plDescription"> Description </label>{" "}
                         <FormTextarea
-                          disabled
                           defaultValue={description}
                           innerRef={elem => (this.iDesc = elem)}
                           size="lg"
@@ -71,7 +131,6 @@ export default class ViewModal extends Component {
                       <FormGroup>
                         <label htmlFor="plNotes"> Notes </label>{" "}
                         <FormTextarea
-                          disabled
                           defaultValue={notes}
                           innerRef={elem => (this.iNotes = elem)}
                           size="lg"
@@ -83,7 +142,6 @@ export default class ViewModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="plBelong"> Belong to </label>{" "}
                           <FormSelect
-                            disabled
                             defaultValue={
                               (parentPlace && parentPlace.placeId) || "none"
                             }
@@ -107,8 +165,11 @@ export default class ViewModal extends Component {
             </ListGroup>{" "}
           </ModalBody>{" "}
           <ModalFooter>
+            <Button theme="primary" onClick={this.save.bind(this)}>
+              SAVE{" "}
+            </Button>{" "}
             <Button theme="white" onClick={cancel}>
-              CLOSE{" "}
+              CANCEL{" "}
             </Button>{" "}
           </ModalFooter>{" "}
         </Modal>{" "}

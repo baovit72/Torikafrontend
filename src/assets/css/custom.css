@@ -2,3 +2,19 @@ td{
     vertical-align:middle;
     line-height: 35px;
 }
+.react-datetime-picker__wrapper{
+    border: 1px solid rgb(225, 229, 235);
+    border-radius: 4px;
+} 
+.modal-body{
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.card-body{
+    overflow-y:auto;
+     
+}
+.tour-picker .modal-body{
+    padding: 5px;
+}

@@ -13,15 +13,16 @@ import {
   FormInput,
   FormGroup,
   FormSelect,
+  FormCheckbox,
   Button,
   FormTextarea
 } from "shards-react";
 
-import PopupNotification from "../utils/popupnotification.js";
+import PopupNotification from "../utils/popupnotification";
 import APIHelper from "../../utils/apihelper.js";
-import { Dispatcher, Constants } from "../../../flux";
+import { Store, Dispatcher, Constants } from "../../../flux";
 
-export default class EditModal extends Component {
+export default class NewTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,11 +47,8 @@ export default class EditModal extends Component {
         tourDuration: duration,
         startPlaceId: start,
         endPlaceId: end
-      }; 
-      APIHelper.put(
-        window.API_DOMAIN + "/api/tours/" + this.props.item.tourId,
-        data
-      )
+      };
+      APIHelper.post(window.API_DOMAIN + "/api/tours", data)
         .then(resp => {
           if (!resp.errors) {
             this.setState(
@@ -58,7 +56,7 @@ export default class EditModal extends Component {
                 showResult: true,
                 resultContent: {
                   title: "Success",
-                  content: `You have successfully updated this tour !`,
+                  content: "You have successfully created a new tour !",
                   closeTop: this.props.cancel
                 }
               },
@@ -98,23 +96,13 @@ export default class EditModal extends Component {
       });
     }
   }
-
   render() {
-    const {
-      tourName,
-      description,
-      notes,
-      tourType,
-      tourDuration,
-      startPlace,
-      endPlace
-    } = this.props.item;
     const { cancel, places } = this.props;
     return (
       <div>
         {" "}
         <Modal open={true} centered>
-          <ModalHeader> EDIT TOUR </ModalHeader>{" "}
+          <ModalHeader>NEW TOUR</ModalHeader>
           <ModalBody>
             <ListGroup flush>
               <ListGroupItem className="p-3">
@@ -125,7 +113,6 @@ export default class EditModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="tName">Name</label>
                           <FormInput
-                            defaultValue={tourName}
                             innerRef={elem => (this.iName = elem)}
                             id="tName"
                             placeholder="Name"
@@ -136,7 +123,6 @@ export default class EditModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="tType">Type</label>
                           <FormSelect
-                            defaultValue={tourType}
                             innerRef={elem => (this.iType = elem)}
                             id="tType"
                           >
@@ -152,7 +138,7 @@ export default class EditModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="tDuration">Duration (hour)</label>
                           <FormInput
-                            defaultValue={tourDuration}
+                            defaultValue={0}
                             innerRef={elem => (this.iDuration = elem)}
                             id="tDuration"
                             type="number"
@@ -164,7 +150,6 @@ export default class EditModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="tStart">Start from</label>
                           <FormSelect
-                            defaultValue={startPlace.placeId}
                             innerRef={elem => (this.iStart = elem)}
                             id="tStart"
                           >
@@ -180,7 +165,6 @@ export default class EditModal extends Component {
                         <Col md="12" className="form-group">
                           <label htmlFor="tEnd">End in</label>
                           <FormSelect
-                            defaultValue={endPlace.placeId}
                             innerRef={elem => (this.iEnd = elem)}
                             id="tEnd"
                           >
@@ -195,7 +179,6 @@ export default class EditModal extends Component {
                       <FormGroup>
                         <label htmlFor="tDescription">Description</label>
                         <FormTextarea
-                          defaultValue={description}
                           innerRef={elem => (this.iDesc = elem)}
                           size="lg"
                           id="tDescription"
@@ -205,28 +188,27 @@ export default class EditModal extends Component {
                       <FormGroup>
                         <label htmlFor="tNotes">Notes</label>
                         <FormTextarea
-                          defaultValue={notes}
                           innerRef={elem => (this.iNotes = elem)}
                           size="lg"
                           id="tNotes"
                           placeholder="Notes"
                         />
                       </FormGroup>
-                    </Form>{" "}
-                  </Col>{" "}
-                </Row>{" "}
-              </ListGroupItem>{" "}
-            </ListGroup>{" "}
-          </ModalBody>{" "}
+                    </Form>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            </ListGroup>
+          </ModalBody>
           <ModalFooter>
             <Button theme="primary" onClick={this.save.bind(this)}>
-              SAVE{" "}
-            </Button>{" "}
+              SAVE
+            </Button>
             <Button theme="white" onClick={cancel}>
-              CANCEL{" "}
-            </Button>{" "}
-          </ModalFooter>{" "}
-        </Modal>{" "}
+              CANCEL
+            </Button>
+          </ModalFooter>
+        </Modal>
         {this.state.showResult && (
           <PopupNotification
             title={this.state.resultContent.title}
@@ -238,7 +220,7 @@ export default class EditModal extends Component {
               })
             }
           />
-        )}{" "}
+        )}
       </div>
     );
   }

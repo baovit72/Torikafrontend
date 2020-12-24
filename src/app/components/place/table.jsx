@@ -106,9 +106,6 @@ export default class Table extends Component {
                         <th scope="col" className="border-0">
                           Belong to
                         </th>
-                        <th scope="col" className="border-0">
-                          Action
-                        </th>
                       </tr>
                     </thead>
                     <tbody>

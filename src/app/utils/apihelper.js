@@ -19,8 +19,57 @@ export default class APIHelper {
                     }
                 });
         })
-
     }
+    static getWithBearer(url, jwt) {
+        return new Promise((resolve, reject) => {
+            fetch(url, {
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + jwt
+                    },
+                })
+                .then(resp => {
+                    if (resp.ok)
+                        return resp.json();
+                    else return new Promise((resolve, reject) => resolve({errors:[]}))
+                })
+                .then(returnedValue => {
+                    resolve(returnedValue);
+                })
+                .catch(function(ex) {
+                    if (ex) {
+                        reject(ex);
+                    }
+                });
+        })
+    }
+
+
+    static postWithBearer(url, data, jwt) {
+        return new Promise((resolve, reject) => {
+            fetch(url, {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwt
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(resp => {
+                    return resp.json();
+                })
+                .then(returnedValue => {
+                    resolve(returnedValue);
+                })
+                .catch(function(ex) {
+                    if (ex) {
+                        reject(ex);
+                    }
+                });
+        })
+    }
+
     static delete(url) {
         return new Promise((resolve, reject) => {
             fetch(url, {
@@ -42,7 +91,7 @@ export default class APIHelper {
     }
 
 
-    static post(url, formData) {
+    static post(url, data) {
         return new Promise((resolve, reject) => {
             fetch(url, {
                     method: 'post',
@@ -50,10 +99,12 @@ export default class APIHelper {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(data)
                 })
                 .then(resp => {
-                    return resp.json();
+                    if (resp.ok)
+                        return resp.json();
+                    else return new Promise((resolve, reject) => resolve({errors:[]}))
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);
@@ -78,7 +129,9 @@ export default class APIHelper {
                     body: JSON.stringify(formData)
                 })
                 .then(resp => {
-                    return resp.json();
+                    if (resp.ok)
+                        return resp.json();
+                    else return new Promise((resolve, reject) => resolve({errors:[]}))
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);

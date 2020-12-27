@@ -38,8 +38,16 @@ class Store extends EventEmitter {
             case Constants.LIST_TRIPS:
                 this.getListTrips();
                 break;
+            case Constants.LOAD_SIDEBAR:
+                this.loadSidebar();
+                break;
             default:
         }
+    }
+
+    loadSidebar() {
+        _store.navItems = getSidebarNavItems();
+        this.emit(Constants.CHANGE);
     }
 
     toggleSidebar() {

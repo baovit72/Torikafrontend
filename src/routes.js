@@ -19,47 +19,14 @@ import Signup from './app/pages/signup';
 import Place from './app/pages/place';
 import Tour from './app/pages/tour';
 import Trip from './app/pages/trip';
+import Booking from './app/pages/booking';
+
+import Dashboard from './app/pages/dashboard'
 
 export default [{
-        path: "/",
-        exact: true,
-        layout: DefaultLayout,
-        component: () => < Redirect to = "/blog-overview" / >
-    },
-    {
-        path: "/blog-overview",
-        layout: DefaultLayout,
-        component: BlogOverview
-    },
-    {
-        path: "/user-profile-lite",
-        layout: DefaultLayout,
-        component: UserProfileLite
-    },
-    {
-        path: "/add-new-post",
-        layout: DefaultLayout,
-        component: AddNewPost
-    },
-    {
-        path: "/errors",
-        layout: DefaultLayout,
-        component: Errors
-    },
-    {
         path: "/components-overview",
         layout: DefaultLayout,
         component: ComponentsOverview
-    },
-    {
-        path: "/tables",
-        layout: DefaultLayout,
-        component: Tables
-    },
-    {
-        path: "/blog-posts",
-        layout: DefaultLayout,
-        component: BlogPosts
     },
     {
         path: "/login",
@@ -75,17 +42,42 @@ export default [{
         path: "/place",
         layout: DefaultLayout,
         component: Place,
+        isAdmin: true
     },
     {
         path: "/tour",
         layout: DefaultLayout,
         component: Tour,
+        isAdmin: true
     },
     {
         path: "/trip",
         layout: DefaultLayout,
         component: Trip,
-    }
+        isAdmin: true
+    },
+    {
+        path: "/user-profile",
+        layout: DefaultLayout,
+        component: UserProfileLite
+    }, {
+        path: "/",
+        layout: Booking,
+        component: null,
+        isUser: true,
+    },
+    {
+        path: "/",
+        layout: Booking,
+        component: null,
+    },
+    {
+        path: "/",
+        layout: DefaultLayout,
+        component: BlogOverview,
+        isAdmin: true,
+    },
+
 
 
 ];

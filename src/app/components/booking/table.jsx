@@ -13,13 +13,23 @@ import {
 import PageTitle from "../../../components/common/PageTitle";
 
 import Lib from "../../utils/lib";
- 
+
 export default class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentItem: null
     };
+  }
+
+  goToTicket(tripId) {
+    window.location.href =
+      window.CLIENT_DOMAIN +
+      "/your-tickets?" +
+      Lib.serializeToQuery({
+        redirect: "/your-tickets",
+        param: tripId
+      });
   }
 
   render() {
@@ -66,9 +76,7 @@ export default class Table extends Component {
                         <th scope="col" className="border-0">
                           Price
                         </th>
-                        <th scope="col" className="border-0"> 
-                        
-                        </th>
+                        <th scope="col" className="border-0"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -79,7 +87,10 @@ export default class Table extends Component {
                             <td> {index + 1} </td>
                             <td> {item.tripName} </td>
                             <td> {item.tripType} </td>
-                            <td> {Lib.renderFullPlace(item.tour.startPlace)} </td>
+                            <td>
+                              {" "}
+                              {Lib.renderFullPlace(item.tour.startPlace)}{" "}
+                            </td>
                             <td> {Lib.renderFullPlace(item.tour.endPlace)} </td>
                             <td> {Lib.formatDate(item.startDate)} </td>
                             <td> {Lib.formatDate(item.endDate)} </td>
@@ -87,11 +98,11 @@ export default class Table extends Component {
                             <td>
                               <Button
                                 theme="primary"
-                                className="mr-1" 
+                                onClick={() => this.goToTicket(item.tripId)}
+                                className="mr-1"
                               >
                                 BOOK NOW
                               </Button>
-                              
                             </td>
                           </tr>
                         ))}

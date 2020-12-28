@@ -61,12 +61,28 @@ export default class BookingPage extends Component {
     this.setState({ end: date });
   }
 
-  onDestinationChange(destination) {
-    this.setState({ destination: destination });
+  onDestinationChange(event) {
+    this.setState({ destination: event.target.value });
   }
 
   onSearch() {
-    this.setState({ searchedTrips: this.state.trips.filter(()=>true)})
+    const isValid = item => {
+      const validDestination = Lib.renderFullPlace(item.tour.endPlace)
+        .toLowerCase()
+        .includes(this.state.destination.toLowerCase());
+      const tourStart = new Date(item.startDate);
+      const tourEnd = new Date(item.endDate);
+      tourStart.setHours(0, 0, 0, 0);
+      tourEnd.setHours(0, 0, 0, 0);
+      const inputStart = new Date(this.state.start);
+      const inputEnd = new Date(this.state.end);
+      inputStart.setHours(0, 0, 0, 0);
+      inputEnd.setHours(0, 0, 0, 0);
+      const validStart = !this.state.start || tourStart >= inputStart;
+      const validEnd = !this.state.end || tourEnd <= inputEnd;
+      return validDestination && validStart && validEnd;
+    };
+    this.setState({ searchedTrips: this.state.trips.filter(isValid) });
   }
 
   render() {
@@ -136,7 +152,7 @@ export default class BookingPage extends Component {
                         aria-controls="place"
                         aria-selected="false"
                       >
-                        start
+                        start from
                       </i>
                     </li>
                     <li class="nav-item">
@@ -148,7 +164,7 @@ export default class BookingPage extends Component {
                         aria-controls="place"
                         aria-selected="false"
                       >
-                        end
+                        end till
                       </i>
                     </li>
                   </ul>
@@ -170,6 +186,7 @@ export default class BookingPage extends Component {
                               <FormInput
                                 innerRef={elem => (this.iName = elem)}
                                 id="plName"
+                                onChange={this.onDestinationChange.bind(this)}
                                 value={this.state.destination}
                                 placeholder="Where you go ?"
                               />
@@ -195,7 +212,10 @@ export default class BookingPage extends Component {
                         <form action="#">
                           <div class="form-row">
                             <div class="form_btn">
-                              <i onClick={this.onSearch.bind(this)} class="btn_1">
+                              <i
+                                onClick={this.onSearch.bind(this)}
+                                class="btn_1"
+                              >
                                 search
                               </i>
                             </div>

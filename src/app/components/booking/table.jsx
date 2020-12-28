@@ -38,7 +38,6 @@ export default class Table extends Component {
           <Row>
             <Col>
               <Card small className="mb-4">
-                
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
                     <thead className="bg-light">
@@ -67,6 +66,9 @@ export default class Table extends Component {
                         <th scope="col" className="border-0">
                           Price
                         </th>
+                        <th scope="col" className="border-0"> 
+                        
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -77,10 +79,11 @@ export default class Table extends Component {
                             <td> {index + 1} </td>
                             <td> {item.tripName} </td>
                             <td> {item.tripType} </td>
+                            <td> {Lib.renderFullPlace(item.tour.startPlace)} </td>
+                            <td> {Lib.renderFullPlace(item.tour.endPlace)} </td>
                             <td> {Lib.formatDate(item.startDate)} </td>
                             <td> {Lib.formatDate(item.endDate)} </td>
                             <td> {Lib.formatCurrency(item.price)} </td>
-                            <td> {item.tour.tourName} </td>
                             <td>
                               <Button
                                 theme="primary"

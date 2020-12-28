@@ -39,9 +39,13 @@ class Store extends EventEmitter {
             case Constants.LIST_TRIPS:
                 this.getListTrips();
                 break;
+            case Constants.LIST_TICKETS:
+                this.getListTickets();
+                break;
             case Constants.LOAD_SIDEBAR:
                 this.loadSidebar();
                 break;
+
             default:
         }
     }
@@ -56,35 +60,52 @@ class Store extends EventEmitter {
         this.emit(Constants.CHANGE);
     }
 
-
     getListTrips() {
-        APIHelper.get(window.API_DOMAIN + "/api/trips?limit=10000&isActive=true").then(data => {
-            _store.trips = data.trips;
-            this.emit(Constants.CHANGE);
-        }).catch(err => console.log(err));
-    }
-    
-    getListTickets() {
-        APIHelper.get(window.API_DOMAIN + "/api/tickets?limit=10000&isActive=true").then(data => {
-            _store.trips = data.trips;
-            this.emit(Constants.CHANGE);
-        }).catch(err => console.log(err));
+        APIHelper.get(
+            window.API_DOMAIN + "/api/trips?limit=10000&isActive=true"
+        )
+            .then(data => {
+                _store.trips = data.trips;
+                this.emit(Constants.CHANGE);
+            })
+            .catch(err => console.log(err));
     }
 
+    getListTickets() {
+        APIHelper.get(
+            window.API_DOMAIN + "/api/tickets?limit=10000&isActive=true"
+        )
+            .then(data => {
+                _store.tickets = data.tickets;
+                this.emit(Constants.CHANGE);
+            })
+            .catch(err => console.log(err));
+    }
 
     getListPlaces() {
-        APIHelper.get(window.API_DOMAIN + "/api/places?limit=10000&isActive=true").then(data => {
-            _store.places = data.places;
-            this.emit(Constants.CHANGE);
-        }).catch(err => console.log(err));
-
+        APIHelper.get(
+            window.API_DOMAIN + "/api/places?limit=10000&isActive=true"
+        )
+            .then(data => {
+                _store.places = data.places;
+                this.emit(Constants.CHANGE);
+            })
+            .catch(err => console.log(err));
     }
 
     getListTours() {
-        APIHelper.get(window.API_DOMAIN + "/api/tours?limit=10000&isActive=true").then(data => {
-            _store.tours = data.tours;
-            this.emit(Constants.CHANGE);
-        }).catch(err => console.log(err));
+        APIHelper.get(
+            window.API_DOMAIN + "/api/tours?limit=10000&isActive=true"
+        )
+            .then(data => {
+                _store.tours = data.tours;
+                this.emit(Constants.CHANGE);
+            })
+            .catch(err => console.log(err));
+    }
+
+    getTickets() {
+        return _store.tickets;
     }
 
     getTrips() {
@@ -101,7 +122,6 @@ class Store extends EventEmitter {
     getMenuState() {
         return _store.menuVisible;
     }
-
 
     getSidebarItems() {
         return _store.navItems;

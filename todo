@@ -4,7 +4,7 @@
 -- Trang list trip 
 -- Trang book trip  
 -- Trang admin quan ly
- 
+ --Trang dashboard
 
  -> Flow login: Lưu jwt vào localStorage 
                 -> Khởi tạo app, check token  , token valid -> vô admin  
@@ -13,3 +13,38 @@
 
 
 Làm đoạn query goto và tripId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-> b000kin -> login 
+
+
+
+
+
+
+
+
+
+
+
+

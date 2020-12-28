@@ -1,43 +1,44 @@
 export default function() {
     if (window.currentUser && window.currentUser.userName.includes("_admin"))
-        return [{
+        return [
+            {
                 title: "Forms & Components",
                 htmlBefore: '<i class="material-icons">view_module</i>',
-                to: "/components-overview",
-            },
-            {
-                title: "User Profile",
-                htmlBefore: '<i class="material-icons">person</i>',
-                to: "/user-profile-lite",
+                to: "/components-overview"
             },
 
             {
                 title: "Places",
                 htmlBefore: '<i class="material-icons">place</i>',
-                to: "/place",
+                to: "/place"
             },
             {
                 title: "Tours",
                 htmlBefore: '<i class="material-icons">tour</i>',
-                to: "/tour",
+                to: "/tour"
             },
             {
                 title: "Trips",
                 htmlBefore: '<i class="material-icons">trip_origin</i>',
-                to: "/trip",
+                to: "/trip"
+            },
+            {
+                title: "Tickets",
+                htmlBefore: '<i class="material-icons">trip_origin</i>',
+                to: "/ticket"
             }
         ];
     else
-        return [ 
+        return [
             {
                 title: "Your Profile",
                 htmlBefore: '<i class="material-icons">person</i>',
-                to: "/user-profile",
+                to: "/user-profile"
             },
             {
                 title: "Your Tickets",
                 htmlBefore: '<i class="material-icons">text_snippet</i>',
-                to: "/your-tickets",
+                to: "/your-tickets"
             }
         ];
 }

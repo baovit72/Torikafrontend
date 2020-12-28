@@ -14,8 +14,10 @@ export default () => {
     setShowPopup(false);
   };
   const goToDashBoard = () => {
-    if(Lib.getParameterByName("redirect")){
-        return Lib.navigateWithQuery(window.CLIENT_DOMAIN  + Lib.getParameterByName("redirect"))
+    if (Lib.getParameterByName("redirect")) {
+      return Lib.navigateWithQuery(
+        window.CLIENT_DOMAIN + Lib.getParameterByName("redirect")
+      );
     }
     console.log("redirect ...");
     window.location.href = window.CLIENT_DOMAIN + "/dashboard";
@@ -75,7 +77,14 @@ export default () => {
         <div class="wrap-login100 p-t-190 p-b-30">
           <form class="login100-form validate-form">
             <div class="login100-form-avatar">
-              <img src={Config.LOGO_URL} alt="AVATAR" />
+              <img
+                src={Config.LOGO_URL}
+                onClick={() =>
+                  (window.location.href = window.CLIENT_DOMAIN + "/booking")
+                }
+                style={{cursor: 'pointer'}}
+                alt="LOGO"
+              />
             </div>
 
             <span class="login100-form-title p-t-20 p-b-45"></span>

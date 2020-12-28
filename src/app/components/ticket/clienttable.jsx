@@ -10,38 +10,33 @@ import {
   Button
 } from "shards-react";
 
+import CancelModal from "./cancelmodal";
+
 import PageTitle from "../../../components/common/PageTitle";
-import NewModal from "./newmodal";
-import EditModal from "./editmodal";
-import RemoveModal from "./removemodal";
 
 import Lib from "../../utils/lib";
 
-import ViewModal from "./viewmodal";
+// import ViewModal from "./viewmodal";
+import QRCode from "react-qr-code";
 
 export default class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cancelModal: false,
-      viewModal: false
+      viewModal: false,
+      currentItem: {}
     };
+    this.closeCancelModal = this.closeCancelModal.bind(this);
+    this.openCancelModal = this.openCancelModal.bind(this);
   }
 
-  openViewModal(item) {
-    this.setState({ viewModal: true, currentItem: item });
-  }
-
-  closeViewModal() {
-    this.setState({ viewModal: false });
-  }
-
-  openCancelModal() {
-    this.setState({ newModal: true });
+  openCancelModal(item) {
+    this.setState({ cancelModal: true, currentItem: item });
   }
 
   closeCancelModal() {
-    this.setState({ newModal: false });
+    this.setState({ cancelModal: false });
   }
   render() {
     return (
@@ -60,22 +55,15 @@ export default class Table extends Component {
           <Row>
             <Col>
               <Card small className="mb-4">
-                <CardHeader className="border-bottom">
-                  <h6 className="m-0">Active Tours</h6>
-                  <Button
-                    theme="primary"
-                    className="mb-2 mt-2"
-                    onClick={this.openNewModal.bind(this)}
-                  >
-                    NEW
-                  </Button>
-                </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
                     <thead className="bg-light">
                       <tr>
                         <th scope="col" className="border-0">
                           #
+                        </th>
+                        <th scope="col" className="border-0">
+                          Code
                         </th>
                         <th scope="col" className="border-0">
                           Status
@@ -104,26 +92,27 @@ export default class Table extends Component {
                         .map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
+                            <td>
+                              <QRCode size={64} value={item.ticketId} />
+                            </td>
                             <td>{item.status}</td>
                             <td>{Lib.formatCurrency(item.ticketPrice)}</td>
                             <td>
                               {Lib.renderFullPlace(item.trip.tour.startPlace)}{" "}
                             </td>
-                            <td> {Lib.renderFullPlace(item.trip.tour.endPlace)} </td>
+                            <td>
+                              {" "}
+                              {Lib.renderFullPlace(
+                                item.trip.tour.endPlace
+                              )}{" "}
+                            </td>
                             <td> {Lib.formatDate(item.trip.startDate)} </td>
                             <td> {Lib.formatDate(item.trip.endDate)} </td>
                             <td>
                               <Button
-                                theme="primary"
-                                className="mr-1"
-                                onClick={() => this.openViewModal(item)}
-                              >
-                                TOUR DETAIL
-                              </Button>
-                              
-                              <Button
-                                onClick={() => this.openRemoveModal(item)}
                                 theme="danger"
+                                disabled={item.status==="CANCELED"}
+                                onClick={() => this.openCancelModal(item)}
                                 className="mr-1"
                               >
                                 CANCEL
@@ -138,32 +127,20 @@ export default class Table extends Component {
             </Col>
           </Row>
         </Container>
-        {this.state.newModal ? (
-          <NewModal
-            cancel={this.closeNewModal.bind(this)}
-            places={this.props.places}
-          />
-        ) : null}
-        {this.state.editModal ? (
-          <EditModal
+
+        {this.state.cancelModal ? (
+          <CancelModal
             item={this.state.currentItem}
-            places={this.props.places}
-            cancel={this.closeEditModal.bind(this)}
+            cancel={this.closeCancelModal.bind(this)}
           />
         ) : null}
-        {this.state.removeModal ? (
-          <RemoveModal
-            item={this.state.currentItem}
-            cancel={this.closeRemoveModal.bind(this)}
-          />
-        ) : null}
-        {this.state.viewModal ? (
+        {/* {this.state.viewModal ? (
           <ViewModal
             places={this.props.places}
             item={this.state.currentItem}
             cancel={this.closeViewModal.bind(this)}
           />
-        ) : null}
+        ) : null} */}
       </div>
     );
   }

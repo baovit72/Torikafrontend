@@ -100,7 +100,7 @@ export default class BookingPage extends Component {
                     </a>
 
                     {window.currentUser ? (
-                      <i className="user-welcome-text">Welcome, {window.currentUser.displayName}</i>
+                      <a href="/user-profile"  className="user-welcome-text">Welcome, {window.currentUser.customer.customerName || window.currentUser.displayName }</a>
                     ) : (
                       <a href="/login?redirect=/booking" class="btn_1 d-lg-block">
                         log in

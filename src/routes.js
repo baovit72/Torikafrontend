@@ -21,13 +21,19 @@ import Tour from './app/pages/tour';
 import Trip from './app/pages/trip';
 import Booking from './app/pages/booking';
 
+import YourTickets from './app/pages/yourtickets'
+
+import Profile from './app/pages/profile'
+
+import Logout from './app/pages/logout'
+
 import Dashboard from './app/pages/dashboard'
 
 export default [{
         path: "/components-overview",
         layout: DefaultLayout,
         component: ComponentsOverview,
-        isAdmin:true
+        isAdmin: true
     },
     {
         path: "/login",
@@ -57,11 +63,7 @@ export default [{
         component: Trip,
         isAdmin: true
     },
-    {
-        path: "/user-profile",
-        layout: DefaultLayout,
-        component: UserProfileLite
-    }, {
+     {
         path: "/booking",
         layout: Booking,
         component: null,
@@ -81,8 +83,27 @@ export default [{
     {
         path: "/your-tickets",
         layout: Login,
-        component: null, 
+        component: null,
     },
+    {
+        path: "/your-tickets",
+        layout: DefaultLayout,
+        component: YourTickets,
+        isUser: true
+    },
+    {
+        path: "/user-profile",
+        layout: DefaultLayout,
+        component: Profile,
+        isUser: true
+    },
+    {
+        path: "/logout",
+        layout: Logout,
+        component: null,
+        isUser: true,
+        isAdmin: true,
+    }
 
 
 ];

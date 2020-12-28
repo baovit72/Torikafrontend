@@ -36,21 +36,26 @@ export default class UserActions extends React.Component {
             src={require("./../../../../images/avatars/0.jpg")}
             alt="User Avatar"
           />{" "}
-          <span className="d-none d-md-inline-block">{window.currentUser.displayName}</span>
-        </DropdownToggle>
+          <span className="d-none d-md-inline-block">
+            {" "}
+            {window.currentUser.customer.customerName || window.currentUser.displayName}{" "}
+          </span>{" "}
+        </DropdownToggle>{" "}
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
-          <DropdownItem tag={Link} to="your-tickets">
-            <i className="material-icons">&#xE7FD;</i> Your Tickets
-          </DropdownItem>
+        <DropdownItem tag={Link} to="booking">
+            <i className="material-icons">play_arrow</i> Book new ticket{" "}
+          </DropdownItem>{" "}
           <DropdownItem tag={Link} to="user-profile">
-            <i className="material-icons">&#xE7FD;</i> Profile
+            <i className="material-icons">&#xE7FD;</i> Profile{" "}
+          </DropdownItem>{" "}
+          <DropdownItem tag={Link} to="your-tickets">
+            <i className="material-icons"> text_snippet </i> Your Tickets{" "}
           </DropdownItem>
-            
           <DropdownItem divider />
           <DropdownItem tag={Link} to="logout" className="text-danger">
-            <i className="material-icons text-danger">&#xE879;</i> Logout
-          </DropdownItem>
-        </Collapse>
+            <i className="material-icons text-danger"> &#xE879; </i> Logout{" "}
+          </DropdownItem>{" "}
+        </Collapse>{" "}
       </NavItem>
     );
   }

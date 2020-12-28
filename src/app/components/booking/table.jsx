@@ -28,7 +28,8 @@ export default class Table extends Component {
       "/your-tickets?" +
       Lib.serializeToQuery({
         redirect: "/your-tickets",
-        param: tripId
+        param: tripId,
+        action: "book"
       });
   }
 

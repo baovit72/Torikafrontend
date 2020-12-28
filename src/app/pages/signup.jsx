@@ -73,8 +73,8 @@ export default () => {
       username: usernameElem.value
     })
       .then(data => {
-        debugger
-        if ((data.errors && typeof data.errors === "string") || !data.errors ) {
+        debugger;
+        if ((data.errors && typeof data.errors === "string") || !data.errors) {
           return setShowPopup({
             open: true,
             title: "Signup Successfully",
@@ -82,7 +82,7 @@ export default () => {
             callback: goToLogin
           });
         }
-        console.log("data ne", data)
+        console.log("data ne", data);
         const errorContents = [];
         for (let key in data.errors) {
           errorContents.push(data.errors[key]);
@@ -90,7 +90,7 @@ export default () => {
         return setShowPopup({
           open: true,
           title: "Errors",
-          content: !errorContents.length && "Something's wrong !" ,
+          content: !errorContents.length && "Something's wrong !",
           contents: errorContents
         });
       })
@@ -109,7 +109,14 @@ export default () => {
         <div class="wrap-login100 p-t-190 p-b-30">
           <form class="login100-form validate-form">
             <div class="login100-form-avatar">
-              <img src={Config.LOGO_URL} alt="LOGO" />
+              <img
+                src={Config.LOGO_URL}
+                onClick={() =>
+                  (window.location.href = window.CLIENT_DOMAIN + "/booking")
+                }
+                style={{ cursor: "pointer" }}
+                alt="LOGO"
+              />
             </div>
 
             <span class="login100-form-title p-t-20 p-b-45"></span>

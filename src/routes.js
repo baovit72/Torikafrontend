@@ -26,7 +26,8 @@ import Dashboard from './app/pages/dashboard'
 export default [{
         path: "/components-overview",
         layout: DefaultLayout,
-        component: ComponentsOverview
+        component: ComponentsOverview,
+        isAdmin:true
     },
     {
         path: "/login",
@@ -77,7 +78,11 @@ export default [{
         component: BlogOverview,
         isAdmin: true,
     },
-
+    {
+        path: "/your-tickets",
+        layout: Login,
+        component: null, 
+    },
 
 
 ];

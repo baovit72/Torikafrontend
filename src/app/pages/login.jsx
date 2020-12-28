@@ -14,6 +14,9 @@ export default () => {
     setShowPopup(false);
   };
   const goToDashBoard = () => {
+    if(Lib.getParameterByName("redirect")){
+        return Lib.navigateWithQuery(window.CLIENT_DOMAIN  + Lib.getParameterByName("redirect"))
+    }
     console.log("redirect ...");
     window.location.href = window.CLIENT_DOMAIN + "/dashboard";
   };

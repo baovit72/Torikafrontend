@@ -244,3 +244,9 @@ html{
   .btn_1{
       cursor: pointer;
   }
+
+  .user-welcome-text{
+      font-weight: bold;
+      color: #2493e0;
+      font-size: 20px;
+  }

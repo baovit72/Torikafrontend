@@ -99,9 +99,13 @@ export default class BookingPage extends Component {
                       <img src={Config.LOGO_URL} width={70} alt="logo" />{" "}
                     </a>
 
-                    <a href="#" class="btn_1 d-lg-block">
-                      log in
-                    </a>
+                    {window.currentUser ? (
+                      <i className="user-welcome-text">Welcome, {window.currentUser.displayName}</i>
+                    ) : (
+                      <a href="/login?redirect=/booking" class="btn_1 d-lg-block">
+                        log in
+                      </a>
+                    )}
                   </nav>
                 </div>
               </div>

@@ -54,7 +54,7 @@ export default () => {
   if (isLoading) {
     return null;
   }
-  if (isLoggedIn && user.userName.includes("_admin")) {
+  if (isLoggedIn && user.userName.includes("admin")) {
     filteredRoutes = routes.filter(r => r.isAdmin);
   } else if (isLoggedIn) {
     filteredRoutes = routes.filter(r => r.isUser);

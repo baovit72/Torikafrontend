@@ -23,11 +23,18 @@ import Lib from "../utils/lib";
 import Config from "../../config/index";
 import { Store, Dispatcher, Constants } from "../../flux";
 
+import Table from "../components/booking/table";
+
 export default class BookingPage extends Component {
   constructor() {
     super();
     this.state = {
-      trips: []
+      trips: [],
+      pickedTrip: null,
+      start: null,
+      end: null,
+      destination: "",
+      searchedTrips: null
     };
     Dispatcher.dispatch({
       actionType: Constants.LIST_TRIPS
@@ -43,6 +50,25 @@ export default class BookingPage extends Component {
     console.log(Store.getTrips());
     this.setState({ tours: Store.getTours(), trips: Store.getTrips() });
   }
+
+  onStartDateChange(date) {
+    console.log(date);
+    this.setState({ start: date });
+  }
+
+  onEndDateChange(date) {
+    console.log(date);
+    this.setState({ end: date });
+  }
+
+  onDestinationChange(destination) {
+    this.setState({ destination: destination });
+  }
+
+  onSearch() {
+    this.setState({ searchedTrips: this.state.trips.filter(()=>true)})
+  }
+
   render() {
     return (
       <div>
@@ -52,7 +78,7 @@ export default class BookingPage extends Component {
               <div class="row align-items-center ">
                 <div class="col-lg-12">
                   <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/booking">
                       {" "}
                       <img src={Config.LOGO_URL} width={70} alt="logo" />{" "}
                     </a>
@@ -110,7 +136,7 @@ export default class BookingPage extends Component {
                         aria-controls="place"
                         aria-selected="false"
                       >
-                        start 
+                        start
                       </i>
                     </li>
                     <li class="nav-item">
@@ -125,7 +151,6 @@ export default class BookingPage extends Component {
                         end
                       </i>
                     </li>
-                    
                   </ul>
                 </div>
               </div>
@@ -145,32 +170,34 @@ export default class BookingPage extends Component {
                               <FormInput
                                 innerRef={elem => (this.iName = elem)}
                                 id="plName"
+                                value={this.state.destination}
                                 placeholder="Where you go ?"
                               />
                             </Col>{" "}
                             <Col md="4" className="form-group">
                               <DateTimePicker
                                 disableClock
-                                clearIcon={null}
                                 minDate={new Date()}
+                                value={this.state.start}
+                                onChange={this.onStartDateChange.bind(this)}
                               />
                             </Col>{" "}
                             <Col md="4" className="form-group">
                               <DateTimePicker
                                 disableClock
-                                clearIcon={null}
+                                onChange={this.onEndDateChange.bind(this)}
+                                value={this.state.end}
                                 minDate={new Date()}
                               />
                             </Col>{" "}
-                            
                           </Row>
                         </Form>
                         <form action="#">
                           <div class="form-row">
                             <div class="form_btn">
-                              <a href="#" class="btn_1">
+                              <i onClick={this.onSearch.bind(this)} class="btn_1">
                                 search
-                              </a>
+                              </i>
                             </div>
                           </div>
                         </form>
@@ -179,12 +206,28 @@ export default class BookingPage extends Component {
                   </div>
                 </div>
               </div>
+              <div class="col-lg-12">
+                <div class="booking_list">
+                  {this.state.searchedTrips &&
+                  this.state.searchedTrips.length > 0 ? (
+                    <Table items={this.state.searchedTrips} />
+                  ) : (
+                    <div
+                      className={
+                        "no-result-text " +
+                        (!this.state.searchedTrips ? "d-none" : "")
+                      }
+                    >
+                      Hey, the tour you were looking for is not available yet,
+                      try another one !
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </div>
     );
-
-    
   }
 }

@@ -221,10 +221,26 @@ html{
   .react-datetime-picker__inputGroup__input:invalid {
     background:none !important;
   }
-  .booking_form .react-datetime-picker__calendar-button__icon{
+  .booking_form .react-datetime-picker__calendar-button__icon,  .booking_form .react-datetime-picker__clear-button__icon{
       stroke:#2493e0;
   }
 
   .booking_form .nav-item{
       margin-right: 20px !important;
+  }
+
+  .booking_form .react-datetime-picker__inputGroup__leadingZero{
+      display: none;
+  }
+  .booking_form input{
+      color: #2493e0; 
+  }
+
+  .no-result-text{
+      text-align: center;
+      margin-top: 15px;
+      font-size: 20px;
+  }
+  .btn_1{
+      cursor: pointer;
   }

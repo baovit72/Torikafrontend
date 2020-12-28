@@ -8,9 +8,14 @@ export default class APIHelper {
                     method: 'get',
                 })
                 .then(resp => {
-                    return resp.json();
+                    if (resp.ok || resp.status === 400)
+                        return resp.json();
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
+
                 })
                 .then(returnedValue => {
+                    
                     resolve(returnedValue);
                 })
                 .catch(function(ex) {
@@ -29,9 +34,11 @@ export default class APIHelper {
                     },
                 })
                 .then(resp => {
-                    if (resp.ok)
+                    if (resp.ok || resp.status === 400)
                         return resp.json();
-                    else return new Promise((resolve, reject) => resolve({errors:[]}))
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
+
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);
@@ -57,7 +64,11 @@ export default class APIHelper {
                     body: JSON.stringify(data)
                 })
                 .then(resp => {
-                    return resp.json();
+                    if (resp.ok || resp.status === 400)
+                        return resp.json();
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
+
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);
@@ -76,7 +87,11 @@ export default class APIHelper {
                     method: 'delete',
                 })
                 .then(resp => {
-                    return resp.json();
+                    if (resp.ok || resp.status === 400)
+                        return resp.json();
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
+
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);
@@ -102,14 +117,18 @@ export default class APIHelper {
                     body: JSON.stringify(data)
                 })
                 .then(resp => {
-                    if (resp.ok)
+
+                    if (resp.ok || resp.status === 400 || resp.status === 500)
                         return resp.json();
-                    else return new Promise((resolve, reject) => resolve({errors:[]}))
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
                 })
                 .then(returnedValue => {
+                    console.log("returnedValue", returnedValue)
                     resolve(returnedValue);
                 })
                 .catch(function(ex) {
+                    console.log(ex);
                     if (ex) {
                         reject(ex);
                     }
@@ -129,9 +148,11 @@ export default class APIHelper {
                     body: JSON.stringify(formData)
                 })
                 .then(resp => {
-                    if (resp.ok)
+                    if (resp.ok || resp.status === 400)
                         return resp.json();
-                    else return new Promise((resolve, reject) => resolve({errors:[]}))
+                    else
+                        return new Promise((resolve, reject) => resolve({ errors: {} }))
+
                 })
                 .then(returnedValue => {
                     resolve(returnedValue);

@@ -61,13 +61,13 @@ export default [{
         layout: DefaultLayout,
         component: UserProfileLite
     }, {
-        path: "/",
+        path: "/booking",
         layout: Booking,
         component: null,
         isUser: true,
     },
     {
-        path: "/",
+        path: "/booking",
         layout: Booking,
         component: null,
     },

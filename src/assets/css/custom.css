@@ -81,3 +81,150 @@ html{
     font-weight: bold;
     font-size: 30px;
 }
+
+.main_menu_iner{
+    background-color:white;
+}
+
+.btn_1, .btn_2 {
+    display: inline-block;
+    padding: 13px 30px;
+    border-radius: 0;
+    font-size: 16px;
+    color: #fff;
+    text-transform: capitalize;
+    -webkit-transition: .5s;
+    transition: .5s;
+    background-color: #fe5c24;
+    font-weight: 500;
+}
+.banner_part {
+    background-size: cover;
+    height: 650px;
+}
+.banner_part { 
+    position: relative;
+    overflow: hidden;
+    background-image: url(https://preview.colorlib.com/theme/martine/img/banner_bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+@media only screen and (max-width: 991px) and (min-width: 768px){
+    .banner_part {
+        height: 700px;
+        background-color: #f0eed4;
+    }
+}
+.banner_text_iner p{
+    font-family: Montserrat-Regular;
+    font-size: 25px;
+    line-height: 1.7;
+    color:white;
+    margin: 0px; 
+    margin-top: 25px; 
+}
+
+.banner_text_iner * {
+    color: white;
+}
+
+.banner_text_iner h1{
+    font-size: 50px;
+}
+
+.banner_part .banner_text .banner_text_iner {
+    vertical-align: middle;
+}
+.banner_part .container{
+    padding-top: 140px;
+    height: 100%;
+    text-align: center;
+}
+
+.booking_part {
+    margin-top: -80px;
+    z-index: 9;
+    position: relative;
+}
+
+.banner_part .banner_text h1 {
+    font-size: 120px;
+    line-height: 1;
+    text-transform: capitalize;
+    color: #fff;
+    font-weight: 900;
+    margin-bottom: 22px;
+}
+
+.booking_part .container{
+    background-color:white;
+}
+.booking_form .form-row{
+    padding: 10px;
+}
+ 
+.nav-tabs {
+    border-bottom: 0px solid transparent;
+}
+
+.booking_form input{  
+    font-size: 20px;
+}
+.booking_form input, .react-datetime-picker__wrapper{
+    height: 52px;
+    
+}
+.react-datetime-picker{
+    width: 100%;
+}
+.booking_form input[class='form-control'],.react-datetime-picker__wrapper{
+    border: 1px solid #2493e0;
+    color:  #2493e0;
+}
+.booking_form input[class='form-control'] :focus{
+    color:  #2493e0;
+    border: 1px solid #2493e0 !important;
+}
+.booking_form input[class='form-control'] ::placeholder,.booking_form input :-ms-input-placeholder,.booking_form input ::-ms-input-placeholder{
+    color:  #2493e0 !important; 
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #2493e0 !important;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:#2493e0!important;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color:#2493e0 !important;
+  }
+
+  select.react-datetime-picker__inputGroup__input.react-datetime-picker__inputGroup__amPm:focus{
+      border:none !important;
+      outline:0 !important;
+  }
+
+  .booking_form .react-datetime-picker__inputGroup__hour,.booking_form .react-datetime-picker__inputGroup__minute, .booking_form .react-datetime-picker__inputGroup__amPm {
+      display:none;
+  }
+
+  .react-datetime-picker__inputGroup__hour + span{
+      display: none;
+  }
+
+  .react-datetime-picker__inputGroup__input:invalid {
+    background:none !important;
+  }
+  .booking_form .react-datetime-picker__calendar-button__icon{
+      stroke:#2493e0;
+  }
+
+  .booking_form .nav-item{
+      margin-right: 20px !important;
+  }

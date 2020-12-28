@@ -20,9 +20,13 @@
          const dateObj = new Date(date);
          return `${dateObj.getHours().toString().padStart(2,"0")}h${dateObj.getMinutes().toString().padStart(2,"0")} ${dateObj.toDateString()}`
      }
-     static getNextDate(date, hours) { 
+     static getNextDate(date, hours) {
          const nextDateObj = new Date(date);
          nextDateObj.setHours(nextDateObj.getHours() + hours);
          return nextDateObj;
+     }
+     static validateEmail(email) {
+         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+         return re.test(String(email).toLowerCase());
      }
  }

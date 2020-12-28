@@ -2,11 +2,11 @@ import React, { Component, useState } from "react";
 
 import Config from "../../config/index";
 
-import APIHelper from "../utils/apihelper.js";
+import APIHelper from "../utils/apihelper";
+
+import Lib from "../utils/lib";
 
 import PopupNotification from "../../app/components/utils/popupnotification";
-
-import { Modal, ModalHeader, ModalBody } from "shards-react";
 
 export default () => {
   const [showPopup, setShowPopup] = useState({});
@@ -14,7 +14,7 @@ export default () => {
     setShowPopup(false);
   };
   const goToDashBoard = () => {
-    console.log("redirect ...")
+    console.log("redirect ...");
     window.location.href = window.CLIENT_DOMAIN + "/dashboard";
   };
   const logIn = event => {
@@ -23,13 +23,21 @@ export default () => {
     const emailElem = document.querySelector("#email");
     const pwdElem = document.querySelector("#password");
     console.log(emailElem, pwdElem);
-      if (!emailElem || !pwdElem) {
-        return setShowPopup({
-          open: true,
-          title: "Error",
-          content: "Please refresh the page and try again !"
-        });
-      }
+    if (!emailElem || !pwdElem) {
+      return setShowPopup({
+        open: true,
+        title: "Try again",
+        content: "Please refresh the page !"
+      });
+    }
+    if (!Lib.validateEmail(emailElem.value)) {
+      return setShowPopup({
+        open: true,
+        title: "Try again",
+        content: "Check your email format / Password can not be empty!"
+      });
+    }
+
     APIHelper.post(window.API_DOMAIN + "/api/user/login", {
       email: emailElem.value,
       password: pwdElem.value
@@ -94,7 +102,7 @@ export default () => {
                 required
                 id="password"
                 class="input100"
-                name="pass"
+                type="password"
                 placeholder="Password"
               />
               <span class="focus-input100"></span>

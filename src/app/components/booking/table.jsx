@@ -88,7 +88,6 @@ export default class Table extends Component {
                             <td> {item.tripName} </td>
                             <td> {item.tripType} </td>
                             <td>
-                              {" "}
                               {Lib.renderFullPlace(item.tour.startPlace)}{" "}
                             </td>
                             <td> {Lib.renderFullPlace(item.tour.endPlace)} </td>

@@ -23,11 +23,8 @@ export default class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newModal: false,
-      editModal: false,
-      removeModal: false,
-      viewModal: false,
-      currentItem: null
+      cancelModal: false,
+      viewModal: false
     };
   }
 
@@ -39,28 +36,12 @@ export default class Table extends Component {
     this.setState({ viewModal: false });
   }
 
-  openEditModal(item) {
-    this.setState({ editModal: true, currentItem: item });
-  }
-
-  closeEditModal() {
-    this.setState({ editModal: false });
-  }
-
-  openNewModal() {
+  openCancelModal() {
     this.setState({ newModal: true });
   }
 
-  closeNewModal() {
+  closeCancelModal() {
     this.setState({ newModal: false });
-  }
-
-  openRemoveModal(item) {
-    this.setState({ removeModal: true, currentItem: item });
-  }
-
-  closeRemoveModal() {
-    this.setState({ removeModal: false });
   }
   render() {
     return (
@@ -70,7 +51,7 @@ export default class Table extends Component {
           <Row noGutters className="page-header py-4">
             <PageTitle
               sm="4"
-              subtitle="TOUR MANAGEMENT"
+              subtitle="YOUR TICKETS"
               className="text-sm-left"
             />
           </Row>
@@ -97,20 +78,24 @@ export default class Table extends Component {
                           #
                         </th>
                         <th scope="col" className="border-0">
-                          Name
+                          Status
                         </th>
                         <th scope="col" className="border-0">
-                          Type
+                          Price
                         </th>
                         <th scope="col" className="border-0">
-                          Duration
+                          Origin
                         </th>
                         <th scope="col" className="border-0">
-                          Start
+                          Destination
                         </th>
                         <th scope="col" className="border-0">
-                          End
+                          Start at
                         </th>
+                        <th scope="col" className="border-0">
+                          End at
+                        </th>
+                        <th scope="col" className="border-0"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -119,33 +104,29 @@ export default class Table extends Component {
                         .map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{item.tourName}</td>
-                            <td>{item.tourType}</td>
-                            <td>{item.tourDuration}</td>
-                            <td>{Lib.renderFullPlace(item.startPlace)}</td>
-                            <td>{Lib.renderFullPlace(item.endPlace)}</td>
-
+                            <td>{item.status}</td>
+                            <td>{Lib.formatCurrency(item.ticketPrice)}</td>
+                            <td>
+                              {Lib.renderFullPlace(item.trip.tour.startPlace)}{" "}
+                            </td>
+                            <td> {Lib.renderFullPlace(item.trip.tour.endPlace)} </td>
+                            <td> {Lib.formatDate(item.trip.startDate)} </td>
+                            <td> {Lib.formatDate(item.trip.endDate)} </td>
                             <td>
                               <Button
-                                theme="secondary"
+                                theme="primary"
                                 className="mr-1"
                                 onClick={() => this.openViewModal(item)}
                               >
-                                VIEW
+                                TOUR DETAIL
                               </Button>
-                              <Button
-                                theme="warning"
-                                className="mr-1"
-                                onClick={() => this.openEditModal(item)}
-                              >
-                                EDIT
-                              </Button>
+                              
                               <Button
                                 onClick={() => this.openRemoveModal(item)}
                                 theme="danger"
                                 className="mr-1"
                               >
-                                DELETE
+                                CANCEL
                               </Button>
                             </td>
                           </tr>

@@ -14,7 +14,7 @@ import { Dispatcher, Constants } from "../../../flux";
 
 import PopupNotification from "../utils/popupnotification";
 
-export default class RemoveModal extends Component {
+export default class ApproveModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +25,7 @@ export default class RemoveModal extends Component {
   save() {
     APIHelper.put(
       window.API_DOMAIN + "/api/tickets/" + this.props.item.ticketId,
-      { status: "CANCELED" }
+      {status:"APPROVED"}
     )
       .then(resp => {
         if (!resp.errors) {
@@ -34,17 +34,13 @@ export default class RemoveModal extends Component {
               showResult: true,
               resultContent: {
                 title: "Success",
-                content: `You have successfully canceled this ticket !`,
+                content: `You have successfully approved this ticket !`,
                 closeTop: this.props.cancel
               }
             },
             () => {
               Dispatcher.dispatch({
-                actionType: Constants.LIST_USER_TICKETS,
-                payload: { customerId: window.currentUser.customer.customerId }
-              });
-              Dispatcher.dispatch({
-                actionType: Constants.LIST_TICKETS
+                actionType: Constants.LIST_TICKETS, 
               });
             }
           );
@@ -76,10 +72,10 @@ export default class RemoveModal extends Component {
       <div>
         {" "}
         <Modal open={true} centered>
-          <ModalHeader>CANCEL TICKET</ModalHeader>
-          <ModalBody>Do you want to cancel this ticket ?</ModalBody>
+          <ModalHeader>APPROVE TICKET</ModalHeader>
+          <ModalBody>Do you want to approve this ticket ?</ModalBody>
           <ModalFooter>
-            <Button theme="danger" onClick={this.save.bind(this)}>
+            <Button theme="primary" onClick={this.save.bind(this)}>
               CONFIRM
             </Button>
             <Button theme="white" onClick={cancel}>

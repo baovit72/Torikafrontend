@@ -115,7 +115,7 @@ UsersByDevice.defaultProps = {
         backgroundColor: [
           "rgba(0,123,255,0.9)",
           "rgba(0,123,255,0.5)",
-          "rgba(0,123,255,0.3)"
+          "rgba(123,123,255,0.3)"
         ]
       }
     ],

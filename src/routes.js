@@ -27,25 +27,30 @@ import Profile from './app/pages/profile'
 
 import Logout from './app/pages/logout'
 
+
+import Ticket from './app/pages/ticket'
+
 import Dashboard from './app/pages/dashboard'
 
 export default [{
-        path: "/components-overview",
+        path: "/logout",
+        layout: Logout,
+        component: null,
+        isUser: true,
+        isAdmin: true,
+    },
+    {
+        path: "/booking",
         layout: DefaultLayout,
-        component: ComponentsOverview,
-        isAdmin: true
-    },
+        component: Dashboard,
+        isAdmin: true,
+    }, 
     {
-        path: "/login",
-        layout: Login,
-        component: null
-    },
-    {
-        path: "/signup",
-        layout: Signup,
-        component: null
-    },
-    {
+        path: "/ticket",
+        layout: DefaultLayout,
+        component: Ticket,
+        isAdmin: true,
+    }, {
         path: "/place",
         layout: DefaultLayout,
         component: Place,
@@ -62,30 +67,17 @@ export default [{
         layout: DefaultLayout,
         component: Trip,
         isAdmin: true
-    },
-     {
+    }, {
+        path: "/overview",
+        layout: DefaultLayout,
+        component: Dashboard,
+        isAdmin: true,
+    }, {
         path: "/booking",
         layout: Booking,
         component: null,
         isUser: true,
-    },
-    {
-        path: "/booking",
-        layout: Booking,
-        component: null,
-    },
-    {
-        path: "/",
-        layout: DefaultLayout,
-        component: BlogOverview,
-        isAdmin: true,
-    },
-    {
-        path: "/your-tickets",
-        layout: Login,
-        component: null,
-    },
-    {
+    }, {
         path: "/your-tickets",
         layout: DefaultLayout,
         component: YourTickets,
@@ -98,12 +90,49 @@ export default [{
         isUser: true
     },
     {
-        path: "/logout",
-        layout: Logout,
+        path: "/login",
+        layout: Login,
+        component: null
+    },
+    {
+        path: "/signup",
+        layout: Signup,
+        component: null
+    },
+
+
+    {
+        path: "/booking",
+        layout: Booking,
         component: null,
-        isUser: true,
-        isAdmin: true,
-    }
+    },
+
+    {
+        path: "/your-tickets",
+        layout: Login,
+        component: null,
+    },
+    {
+        path: "/",
+        layout: Booking,
+        component: null,
+    },
+    {
+        path: "/your-tickets",
+        layout: DefaultLayout,
+        component: Dashboard,
+        isAdmin: true
+    },
+    {
+        path: "/",
+        exact: true,
+        layout: DefaultLayout,
+        component: Dashboard,
+        isAdmin: true
+    },
+
+
+
 
 
 ];

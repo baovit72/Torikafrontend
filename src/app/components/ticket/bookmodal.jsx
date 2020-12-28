@@ -14,7 +14,7 @@ import { Dispatcher, Constants } from "../../../flux";
 
 import PopupNotification from "../utils/popupnotification";
 
-export default class RemoveModal extends Component {
+export default class BookModal extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -38,13 +38,16 @@ export default class UserActions extends React.Component {
           />{" "}
           <span className="d-none d-md-inline-block">
             {" "}
-            {window.currentUser.customer.customerName || window.currentUser.displayName}{" "}
+            {window.currentUser.customer.customerName ||
+              window.currentUser.displayName}{" "}
           </span>{" "}
         </DropdownToggle>{" "}
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
-        <DropdownItem tag={Link} to="booking">
-            <i className="material-icons">play_arrow</i> Book new ticket{" "}
-          </DropdownItem>{" "}
+          {!window.currentUser.userName.includes("_admin") && (
+            <DropdownItem tag={Link} to="booking">
+              <i className="material-icons">play_arrow</i> Book new ticket
+            </DropdownItem>
+          )}
           <DropdownItem tag={Link} to="user-profile">
             <i className="material-icons">&#xE7FD;</i> Profile{" "}
           </DropdownItem>{" "}

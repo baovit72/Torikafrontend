@@ -2,9 +2,9 @@ export default function() {
     if (window.currentUser && window.currentUser.userName.includes("_admin"))
         return [
             {
-                title: "Forms & Components",
+                title: "Overview",
                 htmlBefore: '<i class="material-icons">view_module</i>',
-                to: "/components-overview"
+                to: "/overview"
             },
 
             {
@@ -26,12 +26,7 @@ export default function() {
                 title: "Tickets",
                 htmlBefore: '<i class="material-icons">text_snippet</i>',
                 to: "/ticket"
-            },
-            {
-                title: "Codes",
-                htmlBefore: '<i class="material-icons">settings</i>',
-                to: "/code"
-            }
+            } 
         ];
     else
         return [

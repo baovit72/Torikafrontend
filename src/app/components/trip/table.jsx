@@ -113,6 +113,10 @@ export default class Table extends Component {
                         <th scope="col" className="border-0">
                           Tour
                         </th>
+                        <th scope="col" className="border-0">
+                          Remain Tickets
+                        </th>
+                        <th scope="col" className="border-0"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -127,6 +131,7 @@ export default class Table extends Component {
                             <td> {Lib.formatDate(item.endDate)} </td>
                             <td> {Lib.formatCurrency(item.price)} </td>
                             <td> {item.tour.tourName} </td>
+                            <td>{item.tickets.filter(ticket => ticket.status !== "CANCELED").length } / {item.tripCapacity}</td>
                             <td>
                               <Button
                                 theme="secondary"

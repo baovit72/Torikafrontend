@@ -49,7 +49,16 @@ export default class NewTable extends Component {
     const type = this.iType.value;
     const tourId = this.state.currentTour && this.state.currentTour.tourId;
     const price = this.iPrice.value;
-    if (name && name.length >= 0 && tourId && type && price > 0) {
+    const capacity = this.iCapacity.value;
+
+    if (
+      name &&
+      name.length >= 0 &&
+      tourId &&
+      type &&
+      price > 0 &&
+      capacity > 0
+    ) {
       const shiftDate = new Date(this.state.startDate.toString());
       shiftDate.setHours(this.state.startDate.getHours() + 7);
       const data = {
@@ -59,7 +68,9 @@ export default class NewTable extends Component {
         tripType: type,
         startDate: shiftDate.toISOString(),
         tourId: tourId,
-        price: price
+        price: price,
+        tripCapacity: capacity,
+        tripStatus: "ENABLED"
       };
       APIHelper.post(window.API_DOMAIN + "/api/trips", data)
         .then(resp => {
@@ -128,12 +139,21 @@ export default class NewTable extends Component {
                   <Col>
                     <Form>
                       <Row form>
-                        <Col md="12" className="form-group">
+                        <Col md="6" className="form-group">
                           <label htmlFor="tName">Name</label>
                           <FormInput
                             innerRef={elem => (this.iName = elem)}
                             id="tName"
                             placeholder="Name"
+                          />
+                        </Col>
+                        <Col md="6" className="form-group">
+                          <label htmlFor="tCapacity">Capacity</label>
+                          <FormInput
+                            type="number"
+                            innerRef={elem => (this.iCapacity = elem)}
+                            id="tCapacity"
+                            placeholder="Capacity"
                           />
                         </Col>
                       </Row>

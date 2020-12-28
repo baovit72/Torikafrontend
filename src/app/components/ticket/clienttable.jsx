@@ -12,6 +12,8 @@ import {
 
 import CancelModal from "./cancelmodal";
 
+import BookModal from "./bookmodal";
+
 import PageTitle from "../../../components/common/PageTitle";
 
 import Lib from "../../utils/lib";
@@ -24,11 +26,13 @@ export default class Table extends Component {
     super(props);
     this.state = {
       cancelModal: false,
-      viewModal: false,
+      bookModal: false,
       currentItem: {}
     };
     this.closeCancelModal = this.closeCancelModal.bind(this);
     this.openCancelModal = this.openCancelModal.bind(this);
+    this.closeBookModal = this.closeBookModal.bind(this);
+    this.openBookModal = this.openBookModal.bind(this);
   }
 
   openCancelModal(item) {
@@ -37,6 +41,13 @@ export default class Table extends Component {
 
   closeCancelModal() {
     this.setState({ cancelModal: false });
+  }
+  openBookModal(item) {
+    this.setState({ bookModal: true, currentItem: item });
+  }
+
+  closeBookModal() {
+    this.setState({ bookModal: false });
   }
   render() {
     return (
@@ -109,14 +120,23 @@ export default class Table extends Component {
                             <td> {Lib.formatDate(item.trip.startDate)} </td>
                             <td> {Lib.formatDate(item.trip.endDate)} </td>
                             <td>
-                              <Button
-                                theme="danger"
-                                disabled={item.status==="CANCELED"}
-                                onClick={() => this.openCancelModal(item)}
-                                className="mr-1"
-                              >
-                                CANCEL
-                              </Button>
+                              {item.status !== "CANCELED" ? (
+                                <Button
+                                  theme="danger"
+                                  onClick={() => this.openCancelModal(item)}
+                                  className="mr-1"
+                                >
+                                  CANCEL
+                                </Button>
+                              ) : (
+                                <Button
+                                  theme="primary"
+                                  onClick={() => this.openBookModal(item)}
+                                  className="mr-1"
+                                >
+                                  BOOK AGAIN
+                                </Button>
+                              )}
                             </td>
                           </tr>
                         ))}
@@ -131,16 +151,15 @@ export default class Table extends Component {
         {this.state.cancelModal ? (
           <CancelModal
             item={this.state.currentItem}
-            cancel={this.closeCancelModal.bind(this)}
+            cancel={this.closeCancelModal}
           />
         ) : null}
-        {/* {this.state.viewModal ? (
-          <ViewModal
-            places={this.props.places}
+        {this.state.bookModal ? (
+          <BookModal 
             item={this.state.currentItem}
-            cancel={this.closeViewModal.bind(this)}
+            cancel={this.closeBookModal}
           />
-        ) : null} */}
+        ) : null}
       </div>
     );
   }

@@ -54,7 +54,18 @@ export default class EditModal extends Component {
     const type = this.iType.value;
     const tourId = this.state.currentTour && this.state.currentTour.tourId;
     const price = this.iPrice.value;
-    if (name && name.length >= 0 && tourId && type && price > 0) {
+    const capacity = this.iCapacity.value;
+
+    if (
+      name &&
+      name.length >= 0 &&
+      tourId &&
+      type &&
+      price > 0 &&
+      capacity >=
+        this.props.item.tickets.filter(item => item.status !== "CANCELED")
+          .length
+    ) {
       const shiftDate = new Date(this.state.startDate.toString());
       shiftDate.setHours(this.state.startDate.getHours() + 7);
       const data = {
@@ -64,7 +75,8 @@ export default class EditModal extends Component {
         tripType: type,
         startDate: shiftDate.toISOString(),
         tourId: tourId,
-        price: price
+        price: price,
+        tripCapacity: capacity
       };
       APIHelper.put(
         window.API_DOMAIN + "/api/trips/" + this.props.item.tripId,
@@ -119,7 +131,14 @@ export default class EditModal extends Component {
   }
 
   render() {
-    const { tripName, description, notes, tripType, price } = this.props.item;
+    const {
+      tripName,
+      description,
+      notes,
+      tripType,
+      price,
+      tripCapacity
+    } = this.props.item;
     const { cancel } = this.props;
     return (
       <div>
@@ -133,13 +152,23 @@ export default class EditModal extends Component {
                   <Col>
                     <Form>
                       <Row form>
-                        <Col md="12" className="form-group">
+                        <Col md="6" className="form-group">
                           <label htmlFor="tName">Name</label>
                           <FormInput
                             defaultValue={tripName}
                             innerRef={elem => (this.iName = elem)}
                             id="tName"
                             placeholder="Name"
+                          />
+                        </Col>
+                        <Col md="6" className="form-group">
+                          <label htmlFor="tCapacity">Capacity</label>
+                          <FormInput
+                            defaultValue={tripCapacity}
+                            type="number"
+                            innerRef={elem => (this.iCapacity = elem)}
+                            id="tCapacity"
+                            placeholder="Capacity"
                           />
                         </Col>
                       </Row>

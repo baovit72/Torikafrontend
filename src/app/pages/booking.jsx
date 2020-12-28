@@ -48,7 +48,11 @@ export default class BookingPage extends Component {
   }
   onChange() {
     console.log(Store.getTrips());
-    this.setState({ tours: Store.getTours(), trips: Store.getTrips() });
+    this.setState({
+      trips: Store.getTrips().filter(
+        item => item.tripCapacity - item.tickets.filter(ticket => ticket.status !== "CANCELED").length > 0
+      )
+    });
   }
 
   onStartDateChange(date) {
@@ -100,9 +104,16 @@ export default class BookingPage extends Component {
                     </a>
 
                     {window.currentUser ? (
-                      <a href="/user-profile"  className="user-welcome-text">Welcome, {window.currentUser.customer.customerName || window.currentUser.displayName }</a>
+                      <a href="/user-profile" className="user-welcome-text">
+                        Welcome,{" "}
+                        {window.currentUser.customer.customerName ||
+                          window.currentUser.displayName}
+                      </a>
                     ) : (
-                      <a href="/login?redirect=/booking" class="btn_1 d-lg-block">
+                      <a
+                        href="/login?redirect=/booking"
+                        class="btn_1 d-lg-block"
+                      >
                         log in
                       </a>
                     )}

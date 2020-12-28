@@ -44,7 +44,8 @@ export default class ViewModal extends Component {
       startDate,
       endDate,
       tour,
-      price
+      price,
+      tripCapacity
     } = this.props.item;
     const { cancel } = this.props;
     return (
@@ -59,7 +60,7 @@ export default class ViewModal extends Component {
                   <Col>
                     <Form>
                       <Row form>
-                        <Col md="12" className="form-group">
+                        <Col md="6" className="form-group">
                           <label htmlFor="tName">Name</label>
                           <FormInput
                             disabled
@@ -67,6 +68,17 @@ export default class ViewModal extends Component {
                             innerRef={elem => (this.iName = elem)}
                             id="tName"
                             placeholder="Name"
+                          />
+                        </Col>
+                        <Col md="6" className="form-group">
+                          <label htmlFor="tCapacity">Capacity</label>
+                          <FormInput
+                            disabled
+                            defaultValue={tripCapacity}
+                            type="number"
+                            innerRef={elem => (this.iCapacity = elem)}
+                            id="tCapacity"
+                            placeholder="Capacity"
                           />
                         </Col>
                       </Row>

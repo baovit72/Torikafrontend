@@ -33,10 +33,20 @@ export default class EditModal extends Component {
     };
   }
   save() {
-    let { customerId, tripId, price, status, tripCapacity } = this.props.data;
-    tripCapacity = 10;
+    let {
+      customerId,
+      tripId,
+      price,
+      status,
+      tripCapacity,
+      tickets
+    } = this.props.data;
     status = "BOOKED";
-    if (tripCapacity <= 0) {
+    if (
+      tripCapacity -
+        tickets.filter(ticket => ticket.status !== "CANCELED").length <=
+      0
+    ) {
       return this.setState({
         showResult: true,
         resultContent: {
@@ -53,7 +63,13 @@ export default class EditModal extends Component {
       status,
       tripCapacity
     });
-    if (customerId && tripId && price > 0 && status && tripCapacity > 0) {
+    if (
+      customerId &&
+      tripId &&
+      price > 0 &&
+      status &&
+      tripCapacity - tickets.filter(ticket => ticket.status !== "CANCELED").length > 0
+    ) {
       const data = { customerId, tripId, ticketPrice: price, status };
       APIHelper.post(window.API_DOMAIN + "/api/tickets", data)
         .then(resp => {
@@ -77,8 +93,9 @@ export default class EditModal extends Component {
             this.setState({
               showResult: true,
               resultContent: {
-                title: "Failure",
-                content: "An error has occurred, please try again !"
+                title: "Ticket Booked",
+                content: "You have booked this trip before !",
+                closeTop: this.props.cancel
               }
             });
           }

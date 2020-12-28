@@ -12,7 +12,8 @@ let _store = {
     places: [],
     tours: [],
     trips: [],
-    tickets: []
+    tickets: [],
+    codes: []
 };
 
 class Store extends EventEmitter {
@@ -42,6 +43,9 @@ class Store extends EventEmitter {
             case Constants.LIST_TICKETS:
                 this.getListTickets();
                 break;
+            case Constants.LIST_CODES:
+                this.getListCodes();
+                break;
             case Constants.LOAD_SIDEBAR:
                 this.loadSidebar();
                 break;
@@ -58,6 +62,17 @@ class Store extends EventEmitter {
     toggleSidebar() {
         _store.menuVisible = !_store.menuVisible;
         this.emit(Constants.CHANGE);
+    }
+
+    getListCodes() {
+        APIHelper.get(
+            window.API_DOMAIN + "/api/codes?limit=10000&isActive=true"
+        )
+            .then(data => {
+                _store.codes = data.codes;
+                this.emit(Constants.CHANGE);
+            })
+            .catch(err => console.log(err));
     }
 
     getListTrips() {
@@ -102,6 +117,10 @@ class Store extends EventEmitter {
                 this.emit(Constants.CHANGE);
             })
             .catch(err => console.log(err));
+    }
+
+    getCodes() {
+        return _store.codes;
     }
 
     getTickets() {

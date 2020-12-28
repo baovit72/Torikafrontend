@@ -24,8 +24,13 @@ export default function() {
             },
             {
                 title: "Tickets",
-                htmlBefore: '<i class="material-icons">trip_origin</i>',
+                htmlBefore: '<i class="material-icons">text_snippet</i>',
                 to: "/ticket"
+            },
+            {
+                title: "Codes",
+                htmlBefore: '<i class="material-icons">settings</i>',
+                to: "/code"
             }
         ];
     else

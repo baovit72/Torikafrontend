@@ -7,7 +7,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button
+  Button,
+  FormInput
 } from "shards-react";
 
 import PageTitle from "../../../components/common/PageTitle";
@@ -27,7 +28,8 @@ export default class Table extends Component {
       editModal: false,
       removeModal: false,
       viewModal: false,
-      currentItem: null
+      currentItem: null,
+      searched: ""
     };
   }
 
@@ -88,6 +90,13 @@ export default class Table extends Component {
                   >
                     NEW
                   </Button>
+                  <FormInput
+                    placeholder="Filter by place"
+                    value={this.state.searched}
+                    onChange={event =>
+                      this.setState({ searched: event.target.value })
+                    }
+                  ></FormInput>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
@@ -116,6 +125,15 @@ export default class Table extends Component {
                     <tbody>
                       {this.props.items
                         .filter(item => item.isActive)
+                        .filter(
+                          item =>
+                            Lib.renderFullPlace(item.startPlace)
+                              .toLowerCase()
+                              .includes(this.state.searched.toLowerCase()) ||
+                            Lib.renderFullPlace(item.endPlace)
+                              .toLowerCase()
+                              .includes(this.state.searched.toLowerCase())
+                        )
                         .map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
@@ -124,8 +142,7 @@ export default class Table extends Component {
                             <td>{item.tourDuration}</td>
                             <td>{Lib.renderFullPlace(item.startPlace)}</td>
                             <td>{Lib.renderFullPlace(item.endPlace)}</td>
-                            
-                             
+
                             <td>
                               <Button
                                 theme="secondary"

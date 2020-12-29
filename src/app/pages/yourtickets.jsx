@@ -21,7 +21,7 @@ export default class YourTickets extends Component {
     };
     Dispatcher.dispatch({
       actionType: Constants.LIST_USER_TICKETS,
-      payload:{customerId: window.currentUser.customer.customerId}
+      payload: { customerId: window.currentUser.customer.customerId }
     });
   }
 
@@ -52,8 +52,13 @@ export default class YourTickets extends Component {
         visaExpiryDate,
         visaId
       } = window.currentUser.customer;
-      const isValidID =
-        (customerType.toLowerCase() === "native" && +citizenId > 0) ||
+
+      if (
+        ([address, customerId, customerName, customerType, phone].filter(
+          item => !item
+        ).length === 0 &&
+          customerType.toLowerCase() === "native" &&
+          +citizenId > 0) ||
         (visaId &&
           passsportId &&
           Lib.compareTwoDates(
@@ -63,12 +68,7 @@ export default class YourTickets extends Component {
           Lib.compareTwoDates(
             new Date(visaExpiryDate),
             new Date(data.endDate)
-          ) === 1);
-      if (
-        [address, customerId, customerName, customerType, phone].filter(
-          item => !item
-        ).length === 0 &&
-        isValidID
+          ) === 1)
       ) {
         this.setState({
           bookModal: true,
@@ -78,6 +78,8 @@ export default class YourTickets extends Component {
             customerName: window.currentUser.customer.customerName
           }
         });
+      } else {
+        Lib.navigateWithQuery(window.CLIENT_DOMAIN + "/user-profile");
       }
     });
   }

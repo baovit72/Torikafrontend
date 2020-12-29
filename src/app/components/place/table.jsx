@@ -7,7 +7,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button
+  Button,
+  FormInput
 } from "shards-react";
 
 import PageTitle from "../../../components/common/PageTitle";
@@ -16,6 +17,7 @@ import EditModal from "./editmodal";
 import RemoveModal from "./removemodal";
 
 import ViewModal from "./viewmodal";
+import Lib from "../../utils/lib";
 
 export default class Table extends Component {
   constructor(props) {
@@ -25,7 +27,8 @@ export default class Table extends Component {
       editModal: false,
       removeModal: false,
       viewModal: false,
-      currentItem: null
+      currentItem: null,
+      searched: ""
     };
   }
 
@@ -86,6 +89,13 @@ export default class Table extends Component {
                   >
                     NEW
                   </Button>
+                  <FormInput
+                    placeholder="Filter by place name"
+                    value={this.state.searched}
+                    onChange={event =>
+                      this.setState({ searched: event.target.value })
+                    }
+                  ></FormInput>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
@@ -110,7 +120,13 @@ export default class Table extends Component {
                     </thead>
                     <tbody>
                       {this.props.places
-                        .filter(place => place.isActive)
+                        .filter(
+                          place =>
+                            place.isActive &&
+                            Lib.renderFullPlace(place)
+                              .toLowerCase()
+                              .includes(this.state.searched.toLowerCase())
+                        )
                         .map((place, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>

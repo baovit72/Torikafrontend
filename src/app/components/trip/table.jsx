@@ -7,7 +7,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button
+  Button,
+  FormInput
 } from "shards-react";
 
 import PageTitle from "../../../components/common/PageTitle";
@@ -27,7 +28,8 @@ export default class Table extends Component {
       editModal: false,
       removeModal: false,
       viewModal: false,
-      currentItem: null
+      currentItem: null,
+      searched: ""
     };
   }
 
@@ -87,6 +89,13 @@ export default class Table extends Component {
                   >
                     NEW
                   </Button>
+                  <FormInput
+                    placeholder="Filter by trip name/ tour name"
+                    value={this.state.searched}
+                    onChange={event =>
+                      this.setState({ searched: event.target.value })
+                    }
+                  ></FormInput>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
@@ -122,6 +131,15 @@ export default class Table extends Component {
                     <tbody>
                       {this.props.items
                         .filter(item => item.isActive)
+                        .filter(
+                          item =>
+                            item.tripName
+                              .toLowerCase()
+                              .includes(this.state.searched.toLowerCase()) ||
+                           item.tour.tourName
+                              .toLowerCase()
+                              .includes(this.state.searched.toLowerCase())
+                        )
                         .map((item, index) => (
                           <tr key={index}>
                             <td> {index + 1} </td>
@@ -131,7 +149,14 @@ export default class Table extends Component {
                             <td> {Lib.formatDate(item.endDate)} </td>
                             <td> {Lib.formatCurrency(item.price)} </td>
                             <td> {item.tour.tourName} </td>
-                            <td>{item.tickets.filter(ticket => ticket.status !== "CANCELED").length } / {item.tripCapacity}</td>
+                            <td>
+                              {
+                                item.tickets.filter(
+                                  ticket => ticket.status !== "CANCELED"
+                                ).length
+                              }{" "}
+                              / {item.tripCapacity}
+                            </td>
                             <td>
                               <Button
                                 theme="secondary"

@@ -7,7 +7,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button
+  Button,
+  FormInput
 } from "shards-react";
 
 import CancelModal from "./cancelmodal";
@@ -27,7 +28,8 @@ export default class Table extends Component {
     this.state = {
       cancelModal: false,
       bookModal: false,
-      currentItem: {}
+      currentItem: {},
+      searched: ""
     };
     this.closeCancelModal = this.closeCancelModal.bind(this);
     this.openCancelModal = this.openCancelModal.bind(this);
@@ -66,6 +68,15 @@ export default class Table extends Component {
           <Row>
             <Col>
               <Card small className="mb-4">
+                <CardHeader>
+                  <FormInput
+                    placeholder="Filter by customer name"
+                    value={this.state.searched}
+                    onChange={event =>
+                      this.setState({ searched: event.target.value })
+                    }
+                  ></FormInput>
+                </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
                     <thead className="bg-light">
@@ -75,6 +86,9 @@ export default class Table extends Component {
                         </th>
                         <th scope="col" className="border-0">
                           Code
+                        </th>
+                        <th scope="col" className="border-0">
+                          Customer
                         </th>
                         <th scope="col" className="border-0">
                           Status
@@ -100,12 +114,18 @@ export default class Table extends Component {
                     <tbody>
                       {this.props.items
                         .filter(item => item.isActive)
+                        .filter(item =>
+                          item.customer.customerName
+                            .toLowerCase()
+                            .includes(this.state.searched.toLowerCase())
+                        )
                         .map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>
                               <QRCode size={64} value={item.ticketId} />
                             </td>
+                            <td>{item.customer.customerName}</td>
                             <td>{item.status}</td>
                             <td>{Lib.formatCurrency(item.ticketPrice)}</td>
                             <td>

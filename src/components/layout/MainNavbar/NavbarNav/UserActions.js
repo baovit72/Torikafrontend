@@ -47,13 +47,17 @@ export default class UserActions extends React.Component {
             <DropdownItem tag={Link} to="booking">
               <i className="material-icons">play_arrow</i> Book new ticket
             </DropdownItem>
+          )}{" "}
+          {!window.currentUser.userName.includes("_admin") && (
+            <DropdownItem tag={Link} to="user-profile">
+              <i className="material-icons">&#xE7FD;</i> Profile{" "}
+            </DropdownItem>
           )}
-          <DropdownItem tag={Link} to="user-profile">
-            <i className="material-icons">&#xE7FD;</i> Profile{" "}
-          </DropdownItem>{" "}
-          <DropdownItem tag={Link} to="your-tickets">
-            <i className="material-icons"> text_snippet </i> Your Tickets{" "}
-          </DropdownItem>
+          {!window.currentUser.userName.includes("_admin") && (
+            <DropdownItem tag={Link} to="your-tickets">
+              <i className="material-icons"> text_snippet </i> Your Tickets{" "}
+            </DropdownItem>
+          )}
           <DropdownItem divider />
           <DropdownItem tag={Link} to="logout" className="text-danger">
             <i className="material-icons text-danger"> &#xE879; </i> Logout{" "}

@@ -134,7 +134,7 @@ export default () => {
             </div>
 
             <div class="text-center w-full">
-              <a class="txt1" href="./signup">
+              <a class="txt1" href={"./signup" + window.location.search}>
                 Create new account
                 <i class="fa fa-long-arrow-right"></i>
               </a>

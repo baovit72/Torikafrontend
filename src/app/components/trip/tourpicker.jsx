@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -9,7 +9,8 @@ import {
   CardBody,
   Button,
   Modal,
-  ModalBody
+  ModalBody,
+  FormInput
 } from "shards-react";
 
 import PageTitle from "../../../components/common/PageTitle";
@@ -17,7 +18,8 @@ import PageTitle from "../../../components/common/PageTitle";
 import Lib from "../../utils/lib";
 
 export default ({ pick, tours }) => {
-  console.log("tours",tours)
+  const [searched, setSearched] = useState("");
+  console.log("tours", tours);
   return (
     <div class="tour-picker">
       <Modal size="lg" centered open={true}>
@@ -29,6 +31,11 @@ export default ({ pick, tours }) => {
                 <Card small className="mb-4">
                   <CardHeader className="border-bottom">
                     <h6 className="m-0">Select a tour</h6>
+                    <FormInput
+                      placeholder="Filter by place"
+                      value={searched}
+                      onChange={event => setSearched(event.target.value)}
+                    ></FormInput>
                   </CardHeader>
                   <CardBody className="p-0 pb-3">
                     <table className="table mb-0">
@@ -60,6 +67,15 @@ export default ({ pick, tours }) => {
                       <tbody>
                         {tours
                           .filter(item => item.isActive)
+                          .filter(
+                            item =>
+                              Lib.renderFullPlace(item.startPlace)
+                                .toLowerCase()
+                                .includes(searched.toLowerCase()) ||
+                              Lib.renderFullPlace(item.endPlace)
+                                .toLowerCase()
+                                .includes(searched.toLowerCase())
+                          )
                           .map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>

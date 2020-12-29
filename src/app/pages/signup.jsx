@@ -14,7 +14,7 @@ export default () => {
     setShowPopup(false);
   };
   const goToLogin = () => {
-    window.location.href = window.CLIENT_DOMAIN + "/login";
+    window.location.href = window.CLIENT_DOMAIN + "/login" + window.location.search;
   };
   const signUp = event => {
     console.log(event);

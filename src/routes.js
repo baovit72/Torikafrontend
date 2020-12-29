@@ -113,9 +113,17 @@ export default [{
         component: null,
     },
     {
-        path: "/",
+        path: "/", 
+        exact: true,
         layout: Booking,
         component: null,
+    },
+    {
+        path: "/", 
+        exact: true,
+        layout: Booking,
+        component: null,
+        isUser:true
     },
     {
         path: "/your-tickets",
@@ -129,6 +137,12 @@ export default [{
         layout: DefaultLayout,
         component: Dashboard,
         isAdmin: true
+    },
+    {
+        path: "/dashboard",
+        layout: DefaultLayout,
+        component: YourTickets,
+        isUser: true
     },
 
 
